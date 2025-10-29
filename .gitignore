@@ -1,0 +1,28 @@
+# Server logs
+server.log
+
+# Browser screenshots
+.browser_screenshots/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node modules (if any)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Test directory (embedded git repo)
+test/

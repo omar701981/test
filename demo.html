@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遮罩像素比例視覺化 - 示範</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>遮罩像素比例視覺化 - 示範</h1>
+        
+        <div class="upload-section">
+            <div class="upload-group">
+                <label for="imageInput">原始圖像：</label>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+            <div class="upload-group">
+                <label for="maskInput">遮罩圖像：</label>
+                <input type="file" id="maskInput" accept="image/*">
+            </div>
+            <button id="processBtn" disabled>處理圖像</button>
+            <button id="loadDemoBtn">載入示範圖像</button>
+        </div>
+
+        <div class="visualization-section">
+            <div class="canvas-container">
+                <canvas id="mainCanvas"></canvas>
+                <canvas id="animationCanvas"></canvas>
+            </div>
+            
+            <div class="controls">
+                <button id="playBtn" disabled>播放</button>
+                <button id="pauseBtn" disabled>暫停</button>
+                <button id="resetBtn" disabled>重置</button>
+                <div class="progress-container">
+                    <input type="range" id="progressSlider" min="0" max="100" value="0" disabled>
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">白色像素：</span>
+                    <span id="whitePixelCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">總像素數：</span>
+                    <span id="totalPixelCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">比例：</span>
+                    <span id="pixelRatio">0%</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="chartCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Add demo functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadDemoBtn = document.getElementById('loadDemoBtn');
+            
+            loadDemoBtn.addEventListener('click', async () => {
+                try {
+                    // Load demo images
+                    const imageResponse = await fetch('./sample_image.jpg');
+                    const maskResponse = await fetch('./sample_mask.jpg');
+                    
+                    const imageBlob = await imageResponse.blob();
+                    const maskBlob = await maskResponse.blob();
+                    
+                    // Create File objects
+                    const imageFile = new File([imageBlob], 'sample_image.jpg', { type: 'image/jpeg' });
+                    const maskFile = new File([maskBlob], 'sample_mask.jpg', { type: 'image/jpeg' });
+                    
+                    // Create DataTransfer objects to simulate file selection
+                    const imageDataTransfer = new DataTransfer();
+                    const maskDataTransfer = new DataTransfer();
+                    
+                    imageDataTransfer.items.add(imageFile);
+                    maskDataTransfer.items.add(maskFile);
+                    
+                    // Set the files to the input elements
+                    document.getElementById('imageInput').files = imageDataTransfer.files;
+                    document.getElementById('maskInput').files = maskDataTransfer.files;
+                    
+                    // Trigger the change events
+                    document.getElementById('imageInput').dispatchEvent(new Event('change'));
+                    document.getElementById('maskInput').dispatchEvent(new Event('change'));
+                    
+                    loadDemoBtn.textContent = '示範圖像已載入！';
+                    loadDemoBtn.disabled = true;
+                    
+                } catch (error) {
+                    console.error('載入示範圖像時發生錯誤:', error);
+                    alert('載入示範圖像時發生錯誤，請上傳您自己的圖像。');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
