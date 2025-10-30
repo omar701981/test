@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遮罩像素比例視覺化</title>
+    <title>面積占比計算</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>遮罩像素比例視覺化</h1>
+
         
         <div class="upload-section">
             <div class="upload-group">
-                <label for="imageInput">原始圖像：</label>
+                <label for="imageInput">原始圖片：</label>
                 <input type="file" id="imageInput" accept="image/*">
             </div>
             <div class="upload-group">
-                <label for="maskInput">遮罩圖像：</label>
+                <label for="maskInput">遮罩：</label>
                 <input type="file" id="maskInput" accept="image/*">
             </div>
-            <button id="processBtn" disabled>處理圖像</button>
+            <button id="processBtn" disabled>處理動畫</button>
         </div>
 
         <div class="visualization-section">
@@ -29,7 +29,7 @@
             </div>
             
             <div class="controls">
-                <button id="playBtn" disabled>播放</button>
+                <button id="playBtn" disabled>計算面積占比</button>
                 <button id="pauseBtn" disabled>暫停</button>
                 <button id="resetBtn" disabled>重置</button>
                 <div class="progress-container">
@@ -40,7 +40,7 @@
 
             <div class="stats">
                 <div class="stat-item">
-                    <span class="stat-label">白色像素：</span>
+                    <span class="stat-label">切割區域像素：</span>
                     <span id="whitePixelCount">0</span>
                 </div>
                 <div class="stat-item">
@@ -48,7 +48,7 @@
                     <span id="totalPixelCount">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">比例：</span>
+                    <span class="stat-label">切割區域佔比：</span>
                     <span id="pixelRatio">0%</span>
                 </div>
             </div>
